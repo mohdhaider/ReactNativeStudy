@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import zomato from '../apis/zomotoApi'
+import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 
 const SearchScreen = () => {
 
@@ -11,28 +12,31 @@ const SearchScreen = () => {
     const [results, setResults] = useState([]);
     const [errorMessage, setErrorMessage] = useState('')
 
-    const searchApi = async () => {
-
+    const searchApi = async (searchTerm) => {
         try {
             const response = await zomato.get('/search', {
                 params: {
-                    q: term
+                    q: searchTerm
                 }
             })
+            {term ? null : setTerm(searchTerm)}
             setResults(response.data.restaurants)
             setErrorMessage('')
         } catch (err) {
             setErrorMessage('something went wrong')
         }
     }
-    
+
+    useEffect(() => {
+        searchApi('Italian')
+    }, [])
+
     return (
         <View style={styles.viewStyle}>
-
             <SearchBar
                 term={term}
                 onTermChange={setTerm}
-                onTermSubmit={searchApi}
+                onTermSubmit={() => {term ? searchApi(term) : setResults([]) }}
             />
             {errorMessage ? <Text>{errorMessage}</Text> : null}
             <Text>We have found {results.length} results.</Text>
