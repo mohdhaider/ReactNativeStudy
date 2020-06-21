@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import SearchBar from '../components/SearchBar';
-import { NativeViewGestureHandler } from 'react-native-gesture-handler';
 import useSearchResults from '../hooks/useSearchResults'
+import ResultsList from './ResultsList'
 
 const SearchScreen = () => {
 
@@ -16,10 +16,12 @@ const SearchScreen = () => {
             <SearchBar
                 term={term}
                 onTermChange={setTerm}
-                onTermSubmit={() => { term ? searchApi(term) : setResults([]) }}
+                onTermSubmit={() => { term ? searchApi(term) : null }}
             />
             {errorMessage ? <Text>{errorMessage}</Text> : null}
-            <Text>We have found {results.length} results.</Text>
+            <ResultsList
+                results={results}
+            />
         </View>
     );
 };
