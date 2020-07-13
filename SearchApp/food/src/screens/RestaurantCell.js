@@ -9,16 +9,17 @@ const RestaurantCell = ({ restaurant }) => {
 
     const urlImage = <Image style={styles.imageStyle} source={{ uri: restaurant.thumb }} />
     const placeholderImage = <Image style={styles.imageStyle} source={require('../../assets/placeholder.jpg')} />
-    const ratingText = <Text style={styles.ratingStyle}>{restaurant.user_rating.rating_text}</Text>
+    const ratingText = <Text style={styles.ratingStyle}>Rating: {restaurant.user_rating.rating_text}</Text>
+    const votesText = <Text style={styles.votesStyle}> , Votes: {restaurant.user_rating.votes}</Text>
 
     return (
         <View>
-            <Text></Text>
             <Text style={styles.titleStyle}>{restaurant.name}</Text>
-            <Text></Text>
             {restaurant.thumb ? urlImage : placeholderImage}
-            <Text></Text>
-            {restaurant.user_rating.rating_text ? ratingText : null}
+            <View style={styles.ratingContainerStyle}>
+                {restaurant.user_rating.rating_text ? ratingText : null}
+                {restaurant.user_rating.votes ? votesText : null}
+            </View>
         </View>
     )
 }
@@ -26,16 +27,27 @@ const RestaurantCell = ({ restaurant }) => {
 const styles = StyleSheet.create({
     titleStyle: {
         fontSize: 17,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginTop: 10
     },
     ratingStyle: {
         fontSize: 14,
-        fontWeight: '500'
+        fontWeight: '800'
     },
     imageStyle: {
         width: 250,
         height: 200,
-        borderRadius: 4
+        borderRadius: 4,
+        marginTop: 10,
+        marginBottom: 10
+    },
+    ratingContainerStyle: {
+        flexDirection: 'row',
+        marginBottom: 5
+    },
+    votesStyle: {
+        fontSize: 14,
+        fontWeight: '800'
     }
 });
 

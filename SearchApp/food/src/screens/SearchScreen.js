@@ -6,7 +6,7 @@ import ResultsList from './ResultsList'
 
 const SearchScreen = () => {
 
-    console.log('SearchScreen rendered')
+    //console.log('SearchScreen rendered')
 
     const [term, setTerm] = useState('');
     const [searchApi, results, errorMessage] = useSearchResults()

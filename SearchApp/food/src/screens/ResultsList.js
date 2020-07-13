@@ -7,9 +7,8 @@ const ResultsList = ({ results }) => {
     //console.log(results);
 
     return (
-        <View>
-            <Text>Results List {results.length}</Text>
-            <FlatList
+        <View style={styles.viewStyle}>
+            <FlatList style={styles.listStyle}
                 horizontal={false}
                 data={results}
                 keyExtractor={(result) => result.restaurant.id}
@@ -20,12 +19,22 @@ const ResultsList = ({ results }) => {
                         />
                     )
                 }}
+                onEndReached={() => {
+
+                }}
             />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    viewStyle: {
+        flex: 1
+    },
+    listStyle: {
+        marginHorizontal: 10,
+        paddingBottom: 20
+    }
 });
 
 export default ResultsList;
