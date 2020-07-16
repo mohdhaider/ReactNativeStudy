@@ -4,9 +4,7 @@ import SearchBar from '../components/SearchBar';
 import useSearchResults from '../hooks/useSearchResults'
 import ResultsList from './ResultsList'
 
-const SearchScreen = ({ navigation }) => {
-
-    //console.log(navigation)
+const SearchScreen = () => {
 
     const [term, setTerm] = useState('');
     const [searchApi, results, errorMessage] = useSearchResults()
@@ -20,7 +18,6 @@ const SearchScreen = ({ navigation }) => {
             />
             {errorMessage ? <Text>{errorMessage}</Text> : null}
             <ResultsList
-                navigation={navigation}
                 results={results}
             />
         </View>
