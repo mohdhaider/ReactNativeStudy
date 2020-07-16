@@ -7,6 +7,10 @@ const RestaurantCell = ({ restaurant }) => {
 
     //console.log(restaurant)
 
+    if (!restaurant.thumb) {
+        return null
+    }
+
     const urlImage = <Image style={styles.imageStyle} source={{ uri: restaurant.thumb }} />
     const placeholderImage = <Image style={styles.imageStyle} source={require('../../assets/placeholder.jpg')} />
     const ratingText = <Text style={styles.ratingStyle}>Rating: {restaurant.user_rating.rating_text}</Text>

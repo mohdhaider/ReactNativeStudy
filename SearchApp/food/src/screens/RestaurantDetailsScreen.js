@@ -1,7 +1,9 @@
 import React from 'react'
-import { View, StyleSheet, Image } from 'react-native';
+import { Text, View, StyleSheet, Image } from 'react-native';
 
-const RestaurantDetailsScreen = ({ restaurant }) => {
+const RestaurantDetailsScreen = ({ navigation }) => {
+
+    const restaurant = navigation.state.params.restaurant
 
     const urlImage = <Image style={styles.imageStyle} source={{ uri: restaurant.thumb }} />
     const placeholderImage = <Image style={styles.imageStyle} source={require('../../assets/placeholder.jpg')} />
