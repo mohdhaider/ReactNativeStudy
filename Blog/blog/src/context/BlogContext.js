@@ -1,18 +1,44 @@
-import React from 'react'
+import createDataContext from "./createDataContext";
 
-const BlogContext = React.createContext()
+const blogReducer = (state, action) => {
 
-export const BlogProvider = ({ children }) => {
+    switch (action.type) {
+        case 'addBlogPost':
+            return [
+                ...state,
+                {
+                    id: Math.floor(Math.random() * 9999),
+                    title: `Blog Post #${state.length + 1}`
+                }
+            ];
+        case 'deleteBlogPost':
 
-    const blogPosts = [
-        { title: 'Blog Post #1' },
-        { title: 'Blog Post #2' },
-        { title: 'Blog Post #3' }
-    ]
+            console.log(`state = ${state}`)
 
-    return <BlogContext.Provider value={blogPosts}>
-        {children}
-    </BlogContext.Provider>
+            const arr = state.filter(blogPost => blogPost.id !== action.payload)
+
+            console.log(`arr = ${arr}`)
+
+            return arr
+        default:
+            return state
+    }
 }
 
-export default BlogContext;
+const addBlogPost = (dispatch) => {
+    return () => {
+        dispatch({ type: 'addBlogPost' });
+    }
+}
+
+const deleteBlogPost = (dispatch) => {
+    return (id) => {
+        dispatch({ type: 'deleteBlogPost', payload: id });
+    }
+}
+
+export const { Context, Provider } = createDataContext(
+    blogReducer,
+    { addBlogPost, deleteBlogPost },
+    []
+)
