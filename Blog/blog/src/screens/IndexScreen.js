@@ -1,25 +1,38 @@
 import React, { useContext } from 'react'
-import { View, Text, StyleSheet, FlatList, Button, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
 import { Context as BlogContext } from '../context/BlogContext'
 import { Feather } from '@expo/vector-icons'
 
-const IndexScreen = () => {
+const IndexScreen = ({ navigation }) => {
 
-    const { state, addBlogPost, deleteBlogPost } = useContext(BlogContext)
+    const { state, deleteBlogPost } = useContext(BlogContext)
+
+    /* 
+    return {
+        headerRight: () => (
+          <TouchableOpacity onPress={() => navigation.navigate('Create')}>
+            <Feather name="plus" size={30} />
+          </TouchableOpacity>
+        ),
+      };
+      */
 
     return (
         <View style={styles.listStyle}>
-            <Button
-                title="Add Post"
-                onPress={addBlogPost}
-            />
             <FlatList
                 data={state}
                 keyExtractor={(post) => `${post.id}`}
                 renderItem={({ item }) => {
                     return (
                         <View style={styles.blogPostStyle}>
-                            <Text style={styles.title}>{item.title}</Text>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    navigation.navigate('Show', { id: item.id })
+                                }}
+                            >
+                                <Text style={styles.title}>{item.title}</Text>
+                            </TouchableOpacity>
+
                             <TouchableOpacity
                                 onPress={() => {
                                     deleteBlogPost(item.id)
@@ -33,6 +46,16 @@ const IndexScreen = () => {
             />
         </View>
     )
+}
+
+IndexScreen.navigationOptions = ({navigation}) => {
+    return {
+        headerRight:
+            <TouchableOpacity onPress={() => { navigation.navigate('Create') }}>
+                <Feather style={styles.plusIcon} name='plus' />
+            </TouchableOpacity>,
+        title:'Blog Posts'
+    };
 }
 
 const styles = StyleSheet.create({
@@ -53,6 +76,10 @@ const styles = StyleSheet.create({
     },
     icon: {
         fontSize: 24
+    },
+    plusIcon: {
+        fontSize: 30,
+        marginLeft: 20
     }
 })
 
