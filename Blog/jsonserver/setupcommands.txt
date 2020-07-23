@@ -1,0 +1,35 @@
+Create a directory :
+mkdir jsonserver
+
+Move to that directory:
+cd jsonserver/
+
+Initialise node package manager:
+npm init
+
+Install json-server and ngrok
+npm install json-server ngrok
+
+Setup scripts in package.json:
+
+  "scripts": {
+    "db": "json-server -w db.json",
+    "tunnel": "ngrok http 3000"
+  },
+
+In one tab of jsonserver directory run:
+npm run db
+
+In second tab of jsonserver directory run:
+npn run tunnel
+
+If got any issue in running server:
+Then update post number. That can solve the problem:
+
+  "scripts": {
+    "db": "json-server -w db.json -p 3001",
+    "tunnel": "ngrok http 3001"
+  },
+
+On getting issue on port number running, 
+we might need to try different port numbers to start server.
