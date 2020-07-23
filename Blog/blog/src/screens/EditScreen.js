@@ -1,6 +1,7 @@
-import React, { useContext, useState } from 'react'
-import { View, Text, TextInput, StyleSheet, Button } from 'react-native'
+import React, { useContext } from 'react'
+import { StyleSheet } from 'react-native'
 import { Context as BlogContext } from '../context/BlogContext'
+import BlogPostForm from '../components/BlogPostForm'
 
 const EditScreen = ({ navigation }) => {
 
@@ -10,34 +11,14 @@ const EditScreen = ({ navigation }) => {
         (blogPost) => blogPost.id == navigation.getParam('id')
     )
 
-    const [title, setTitle] = useState(blogPost.title)
-    const [content, setContent] = useState(blogPost.content)
-
     const { editBlogPost } = useContext(BlogContext)
 
-    return (
-        <View style={styles.viewStyle}>
-            <Text style={styles.titleStyle}>Edit Title:</Text>
-            <TextInput
-                style={styles.inputStyle}
-                value={title}
-                onChangeText={(text) => { setTitle(text) }}
-            />
-
-            <Text style={styles.titleStyle}>Edit Content:</Text>
-            <TextInput
-                style={styles.inputStyle}
-                value={content}
-                onChangeText={(text) => { setContent(text) }}
-            />
-            <Button title='Save Blog Post'
-                onPress={() => {
-                    editBlogPost(blogPost.id, title, content, () => {
-                        navigation.navigate('Index')
-                    })
-                }} />
-        </View >
-    )
+    return <BlogPostForm
+        initialValues={{ title: blogPost.title, content: blogPost.content }}
+        onSubmit={(title, content) => {
+            editBlogPost(blogPost.id, title, content, () => { navigation.pop() })
+        }}
+    />
 }
 
 EditScreen.navigationOptions = ({ navigation }) => {
@@ -52,17 +33,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'lightgrey',
         flex: 1,
         padding: 10
-    },
-    inputStyle: {
-        fontSize: 18,
-        borderWidth: 1,
-        borderColor: 'black',
-        marginHorizontal: 10
-    },
-    titleStyle: {
-        fontSize: 16,
-        marginHorizontal: 10,
-        marginTop: 10
     }
 })
 

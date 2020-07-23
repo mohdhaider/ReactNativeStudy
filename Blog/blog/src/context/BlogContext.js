@@ -13,14 +13,9 @@ const blogReducer = (state, action) => {
                 }
             ];
         case 'editBlogPost':
-            return [
-                ...state,
-                {
-                    id: Math.floor(Math.random() * 9999),
-                    title: action.payload.title,
-                    content: action.payload.content,
-                }
-            ];
+            return state.map((blogPost) => {
+                return blogPost.id == action.payload.id ? action.payload : blogPost
+            })
         case 'deleteBlogPost':
 
             const arr = state.filter(blogPost => blogPost.id !== action.payload)
@@ -40,7 +35,7 @@ const addBlogPost = (dispatch) => {
 
 const editBlogPost = (dispatch) => {
     return (id, title, content, callBack) => {
-        dispatch({ type: 'editBlogPost', payload: { title, content } });
+        dispatch({ type: 'editBlogPost', payload: { id, title, content } });
         callBack();
     }
 }
