@@ -55,8 +55,12 @@ const editBlogPost = (dispatch) => {
 
 const deleteBlogPost = (dispatch) => {
     return async (id, callBack) => {
-        await jsonServer.delete(`/blogposts/${id}`)
-        callBack()
+        try {
+            await jsonServer.delete(`/blogposts/${id}`)
+            callBack()
+        } catch(error) {
+            console.log(error)
+        }       
     }
 }
 
