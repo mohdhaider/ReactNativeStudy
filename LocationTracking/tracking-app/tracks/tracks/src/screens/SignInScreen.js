@@ -1,8 +1,12 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 
 const SignInScreen = () => {
-    return <Text>SignInScreen</Text>
+    return (
+        <View>
+            <Text>SignInScreen</Text>
+        </View>
+    )
 };
 
 const styles = StyleSheet.create({
